@@ -2,11 +2,13 @@
 import { Button, Modal } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { ImageUpload } from './ImageUpload';
+import 'react-image-crop/dist/ReactCrop.css'
 
 interface ModalProps {
     handleModalToggle : boolean
+    handleProfilePictureUpdate : (value:string) => void
 }
-export const ModalComponent:React.FC<ModalProps>= ({handleModalToggle}) => {
+export const ModalComponent:React.FC<ModalProps>= ({handleModalToggle,handleProfilePictureUpdate}) => {
   const [openModal, setOpenModal] = useState(false);
   
   useEffect(()=>{
@@ -20,14 +22,9 @@ export const ModalComponent:React.FC<ModalProps>= ({handleModalToggle}) => {
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Select Image</Modal.Header>
         <Modal.Body>
-       <ImageUpload/>
+       <ImageUpload handleProfilePictureUpdated={handleProfilePictureUpdate} handleModalToggle={()=>{setOpenModal(false)}}/>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setOpenModal(false)}>I accept</Button>
-          <Button color="gray" onClick={() => setOpenModal(false)}>
-            Decline
-          </Button>
-        </Modal.Footer>
+        
       </Modal>
     </>
   );
